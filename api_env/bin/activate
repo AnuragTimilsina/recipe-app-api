@@ -46,7 +46,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/anurag/Documents/course/recipe-app-api/recipe"
+VIRTUAL_ENV="/home/anurag/Documents/course/recipe-app-api/api_env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
