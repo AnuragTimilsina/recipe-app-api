@@ -32,25 +32,27 @@ class PublicUserApiTests(TestCase):
         self.assertTrue(user.check_password(payload['password']))
         self.assertNotIn('password',res.data)
 
-    def test_user_exists(self):
-        """ Test creating a user that already fails """
-        payload = {'email':'test@example.com','password':'testpass'}
+      def test_user_exists(self):
+        """Test creatinga  user that already exists fails"""
+        payload = {
+            'email': 'test@londonappdev.com',
+            'password': 'testpass',
+            'name': 'Test',
+        }
         create_user(**payload)
 
-        res = self.client.post(CREATE_USER_URL,payload)
-
-        self.assertEqual(res.status_code,status.HTTP_400_BAD_REQUEST)
+        res = self.client.post(CREATE_USER_URL, payload)
 
     def test_password_too_short(self):
-        """ Test that the password must be more than 5 characters """
-        payload = {'email':'test@example.com','password':'pw'}
-        res = self.client.post(CREATE_USER_URL,payload)
+        """Test that the password must be more than 5 characters"""
+        payload = {
+            'email': 'test@londonappdev.com',
+            'password': 'pw',
+            'name': 'Test',
+        }
+        res = self.client.post(CREATE_USER_URL, payload)
 
-        self.assertEqual(res.status_code,status.HTTP_400_BAD_REQUEST)
-        user_exists = get_user_model().objects.filter(
-            email = payload['email']
-        ).exists()
-        self.assertFalse(user_exists)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_token_for_user(self):
         """ Test that a token is created for the user """
